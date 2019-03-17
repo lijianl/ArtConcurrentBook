@@ -10,6 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 10-15
+ * 公平锁/非公平锁的实现
  */
 public class FairAndUnfairTest {
 

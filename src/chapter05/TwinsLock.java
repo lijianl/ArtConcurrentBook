@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package chapter05;
 
@@ -12,6 +12,8 @@ import java.util.concurrent.locks.Lock;
  * 10-10
  */
 public class TwinsLock implements Lock {
+
+    // 同步资源数=2
     private final Sync sync = new Sync(2);
 
     private static final class Sync extends AbstractQueuedSynchronizer {
@@ -21,11 +23,11 @@ public class TwinsLock implements Lock {
             if (count <= 0) {
                 throw new IllegalArgumentException("count must large than zero.");
             }
-            setState(count);
+            setState(count);// 同步状态
         }
 
         public int tryAcquireShared(int reduceCount) {
-            for (;;) {
+            for (; ; ) {
                 int current = getState();
                 int newCount = current - reduceCount;
                 if (newCount < 0 || compareAndSetState(current, newCount)) {
@@ -35,7 +37,7 @@ public class TwinsLock implements Lock {
         }
 
         public boolean tryReleaseShared(int returnCount) {
-            for (;;) {
+            for (; ; ) {
                 int current = getState();
                 int newCount = current + returnCount;
                 if (compareAndSetState(current, newCount)) {
